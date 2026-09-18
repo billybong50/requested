@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Requested Games</title>
+
+    <style>
+
+        /* --- Setup --- */
+
+        html, body {
+
+            height: 100%;
+
+            margin: 0;
+
+            padding: 0;
+
+            font-family: 'Inter', sans-serif;
+
+            background: #000;
+
+            color: white;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+        }
+
+
+
+        body {
+
+            background: radial-gradient(circle at top, #1a1a1a 0%, #000 100%);
+
+        }
+
+
+
+        /* --- Header Navigation --- */
+
+        .header-nav {
+
+            width: 90%;
+
+            max-width: 1000px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-top: 40px;
+
+        }
+
+
+
+        .back-home-link {
+
+            text-decoration: none;
+
+            color: #4facfe;
+
+            font-weight: 800;
+
+            font-size: 14px;
+
+            text-transform: uppercase;
+
+            padding: 8px 15px;
+
+            border: 1px solid #4facfe;
+
+            border-radius: 20px;
+
+            transition: 0.3s;
+
+        }
+
+
+
+        .back-home-link:hover {
+
+            background: #4facfe;
+
+            color: #000;
+
+        }
+
+
+
+        .main-header {
+
+            font-size: 42px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            background: linear-gradient(#4facfe, #00f2fe);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            margin: 0;
+
+        }
+
+
+
+        /* --- Search Bar & Random Button --- */
+
+        .search-container {
+
+            width: 90%;
+
+            max-width: 700px;
+
+            margin: 30px 0 40px 0;
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+
+
+        #gameSearch {
+
+            flex-grow: 1;
+
+            padding: 15px 25px;
+
+            border-radius: 30px;
+
+            border: 2px solid rgba(79, 172, 254, 0.3);
+
+            background: rgba(255, 255, 255, 0.05);
+
+            color: white;
+
+            font-size: 16px;
+
+            outline: none;
+
+            transition: 0.3s;
+
+            text-align: center;
+
+        }
+
+
+
+        #gameSearch:focus {
+
+            border-color: #4facfe;
+
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.4);
+
+        }
+
+
+
+        .random-btn {
+
+            background: linear-gradient(135deg, #7928ca, #ff0080);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 30px;
+
+            padding: 0 25px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            text-transform: uppercase;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+
+        }
+
+
+
+        /* --- Grid --- */
+
+        .request-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+            gap: 20px;
+
+            width: 90%;
+
+            max-width: 1000px;
+
+            padding-bottom: 50px;
+
+        }
+
+
+
+        .card {
+
+            background: rgba(255, 255, 255, 0.05);
+
+            border: 1px solid rgba(79, 172, 254, 0.3);
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            transition: all 0.3s ease;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            min-height: 140px;
+
+        }
+
+
+
+        .hidden { display: none !important; }
+
+
+
+        .card:hover {
+
+            transform: translateY(-5px);
+
+            background: rgba(79, 172, 254, 0.1);
+
+            border-color: #4facfe;
+
+        }
+
+
+
+        .card h3 { margin: 0 0 15px 0; font-size: 18px; text-transform: uppercase; }
+
+
+
+        .btn {
+
+            background: #4facfe;
+
+            color: #000;
+
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            text-transform: uppercase;
+
+            font-size: 13px;
+
+            text-decoration: none;
+
+        }
+
+
+
+        /* --- UBG Multi-Button Box Styling --- */
+
+        .ubg-card {
+
+            border: 2px solid #7928ca;
+
+            background: rgba(121, 40, 202, 0.15);
+
+            min-height: 180px;
+
+        }
+
+        
+
+        .ubg-button-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 8px;
+
+            margin-top: 5px;
+
+        }
+
+
+
+        .ubg-mini-btn {
+
+            background: #7928ca;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 5px;
+
+            border-radius: 6px;
+
+            font-weight: 800;
+
+            font-size: 11px;
+
+            cursor: pointer;
+
+            text-transform: uppercase;
+
+            transition: 0.2s;
+
+        }
+
+
+
+        .ubg-mini-btn:hover {
+
+            background: #9d50bb;
+
+            transform: scale(1.05);
+
+            box-shadow: 0 0 10px rgba(157, 80, 187, 0.5);
+
+        }
+
+
+
+        /* --- Modal Pop-up --- */
+
+        #modalOverlay {
+
+            display: none;
+
+            position: fixed;
+
+            top: 0; left: 0; width: 100%; height: 100%;
+
+            background: rgba(0, 0, 0, 0.85);
+
+            backdrop-filter: blur(8px);
+
+            z-index: 1000;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+
+        .modal {
+
+            background: #111;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            border: 2px solid #4facfe;
+
+            text-align: center;
+
+            width: 350px;
+
+        }
+
+
+
+        .modal-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+
+        .m-btn { padding: 12px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+
+        .play-btn { background: #4facfe; color: #000; }
+
+        .reroll-btn { background: #7928ca; color: white; }
+
+        .close-btn { background: #333; color: white; }
+
+
+
+        .form-card { border: 2px dashed #4facfe; }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <div id="modalOverlay">
+
+        <div class="modal">
+
+            <p>Ready to play?</p>
+
+            <h2 id="randomGameTitle">Game Name</h2>
+
+            <div class="modal-buttons">
+
+                <button class="m-btn play-btn" id="modalPlay">Play Now</button>
+
+                <button class="m-btn reroll-btn" onclick="pickRandom()">Reroll 🎲</button>
+
+                <button class="m-btn close-btn" onclick="closeModal()">Close</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="header-nav">
+
+        <a href="https://realhome-74e.onrender.com" class="back-home-link">← Home</a>
+
+        <h1 class="main-header">Requested Games</h1>
+
+        <div style="width: 70px;"></div>
+
+    </div>
+
+
+
+    <div class="search-container">
+
+        <input type="text" id="gameSearch" placeholder="Search for a game..." onkeyup="filterGames()">
+
+        <button class="random-btn" onclick="pickRandom()">Random 🎲</button>
+
+    </div>
+
+
+
+    <div class="request-grid" id="gameGrid">
+
+        <div class="card form-card">
+
+            <h3>Request a Game</h3>
+
+            <a href="https://forms.gle/xhWTy62fK1YqxNQA6" target="_blank" class="btn">Open Form</a>
+            
+        </div> 
+  <div class="card" data-name="Antimatter Dimensions">
+
+            <h3>Getaway Shootout</h3>
+
+            <button class="btn" onclick="launch('Antimatter Dimensions', 'https://getaway-shootout-kgp3.onrender.com/')">Play Now</button>
+
+        </div>
+         <div class="card" data-name="Antimatter Dimensions">
+
+            <h3>Escape Road City 2</h3>
+
+            <button class="btn" onclick="launch('Antimatter Dimensions', 'https://escaperoadcity2.onrender.com/')">Play Now</button>
+
+        </div>
+         <div class="card" data-name="Antimatter Dimensions">
+
+            <h3>Pokerogue</h3>
+
+            <button class="btn" onclick="launch('Antimatter Dimensions', 'https://pokerogue-j6ny.onrender.com')">Play Now</button>
+
+        </div>
+
+      
+
+         <div class="card" data-name="Antimatter Dimensions">
+
+            <h3>Clover Pit</h3>
+
+            <button class="btn" onclick="launch('Antimatter Dimensions', 'https://web-ports-clover-pit-2ea4c7c.onrender.com/')">Play Now</button>
+
+        </div>
+
+        <div class="card" data-name="Antimatter Dimensions">
+
+            <h3>Dino-Bros</h3>
+
+            <button class="btn" onclick="launch('Antimatter Dimensions', 'https://dinobros.onrender.com/')">Play Now</button>
+
+        </div>
+
+        <div class="card" data-name="Antimatter Dimensions">
+
+            <h3>SchoolBoy Runaway</h3>
+
+            <button class="btn" onclick="launch('Antimatter Dimensions', 'https://schoolboy-runaway-1etv.onrender.com')">Play Now</button>
+
+        </div>
+
+       
+
+
+        <div class="card" data-name="Antimatter Dimensions">
+
+            <h3>Antimatter Dimensions</h3>
+
+            <button class="btn" onclick="launch('Antimatter Dimensions', 'https://antimatterdimensionssourcecode.onrender.com/')">Play Now</button>
+
+        </div>
+
+
+
+   
+
+
+        <div class="card" data-name="OverCloaked Website">
+
+            <h3>OverCloaked (Website)</h3>
+
+            <button class="btn" onclick="launch('OverCloaked', 'https://ia63sud1.beanweb.qzz.io.cdn.cloudflare.net')">Play Now</button>
+
+        </div>
+
+
+
+        <div class="card" data-name="Bloxd.io">
+
+            <h3>Bloxd.io</h3>
+
+            <button class="btn" onclick="launch('Bloxd.io', 'https://geometry.com.de/')">Play Now</button>
+
+        </div>
+
+
+
+        <div class="card" data-name="Geometry Dash Lite">
+
+            <h3>Geometry Dash Lite</h3>
+
+            <button class="btn" onclick="launch('Geometry Dash Lite', 'https://gdl-kzds.onrender.com')">Play Now</button>
+
+        </div>
+
+
+
+        <div class="card" data-name="Five Nights at Epstein's FNAF">
+
+            <h3>Five Nights at Epstein's</h3>
+
+            <button class="btn" onclick="launch('Five Nights at Epstein\'s', 'https://fivenightsatepsteins.onrender.com')">Play Now</button>
+
+        </div>
+
+
+
+        <div class="card" data-name="Ultimate Emulator Console">
+
+            <h3>Ultimate Emulator</h3>
+
+            <button class="btn" onclick="launch('Ultimate Emulator', 'https://archive.org/details/consolelivingroom')">Play Now</button>
+
+        </div>
+
+
+
+      
+
+
+
+        <div class="card" data-name="Mindustry">
+
+            <h3>Mindustry</h3>
+
+            <button class="btn" onclick="launch('Mindustry', 'https://mindustryclassicmirror.pages.dev')">Play Now</button>
+
+        </div>
+
+
+
+        <div class="card" data-name="Drive Mad">
+
+            <h3>Drive Mad</h3>
+
+            <button class="btn" onclick="launch('Drive Mad', 'https://drive-mad-20tm.onrender.com')">Play Now</button>
+
+        </div>
+
+
+
+        <div class="card" data-name="N-Gon">
+
+            <h3>N-Gon</h3>
+
+            <button class="btn" onclick="launch('N-Gon', 'https://n-gon-mh3g.onrender.com')">Play Now</button>
+
+        </div>
+
+
+
+        <div class="card" data-name="Gn-Math">
+
+            <h3>Gn-Math</h3>
+
+            <button class="btn" onclick="launch('Gn-math', 'https://gn-math-5pb.pages.dev')">Play Now</button>
+
+        </div>
+
+
+
+        <div class="card" data-name="Buckshot Roulette">
+
+            <h3>Buckshot Roulette</h3>
+
+            <button class="btn" onclick="launch('Buckshot Roulette', 'https://buckshot-roulette-7pp.pages.dev')">Play Now</button>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        // Search Functionality
+
+        function filterGames() {
+
+            let input = document.getElementById('gameSearch').value.toLowerCase();
+
+            let cards = document.querySelectorAll('.card:not(.form-card)');
+
+            cards.forEach(card => {
+
+                let title = card.getAttribute('data-name').toLowerCase();
+
+                card.classList.toggle('hidden', !title.includes(input));
+
+            });
+
+        }
+
+
+
+        // Random Game Selection Logic
+
+        let selectedRandom = { name: "", url: "" };
+
+
+
+        function pickRandom() {
+
+            // Exclude the form and the UBG multi-box from randomizer for safety
+
+            const cards = document.querySelectorAll('.card:not(.form-card):not(.ubg-card)');
+
+            const randomCard = cards[Math.floor(Math.random() * cards.length)];
+
+            
+
+            selectedRandom.name = randomCard.getAttribute('data-name');
+
+            // Extract the URL from the button onclick string
+
+            const btnClick = randomCard.querySelector('.btn').getAttribute('onclick');
+
+            selectedRandom.url = btnClick.split("'")[3];
+
+            
+
+            document.getElementById('randomGameTitle').innerText = selectedRandom.name;
+
+            document.getElementById('modalOverlay').style.display = 'flex';
+
+            
+
+            document.getElementById('modalPlay').onclick = function() {
+
+                launch(selectedRandom.name, selectedRandom.url);
+
+                closeModal();
+
+            };
+
+        }
+
+
+
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+
+
+
+        // Core Launch Logic (Stealth Iframe + Panic Key)
+
+        function launch(name, url) {
+
+            const content = `
+
+                <!DOCTYPE html>
+
+                <html>
+
+                <head>
+
+                    <title>${name}</title>
+
+                    <link rel="icon" href="https://ssl.gstatic.com/docs/doclist/images/infinite_growth_customer_emails.png">
+
+                    <style>
+
+                        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #000; font-family: sans-serif; }
+
+                        iframe { border: none; width: 100%; height: 100%; }
+
+                        .back-btn {
+
+                            position: fixed; top: 15px; left: 15px;
+
+                            padding: 8px 16px; background: rgba(0, 0, 0, 0.5);
+
+                            color: white; border: 1px solid rgba(255, 255, 255, 0.2);
+
+                            border-radius: 20px; cursor: pointer; z-index: 99999;
+
+                            font-weight: bold; text-decoration: none; backdrop-filter: blur(4px);
+
+                            font-size: 13px; transition: 0.2s;
+
+                        }
+
+                        .back-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+                    </style>
+
+                </head>
+
+                <body>
+
+                    <a href="javascript:location.reload()" class="back-btn">← </a>
+
+                    <iframe src="${url}"></iframe>
+
+                    <script>
+
+                        window.addEventListener('keydown', function(e) {
+
+                            if (e.key.toLowerCase() === 'q') window.location.replace('https://classroom.google.com');
+
+                        });
+
+                    <\/script>
+
+                </body>
+
+                </html>`;
+
+            document.open();
+
+            document.write(content);
+
+            document.close();
+
+        }
+
+
+
+        // Global Panic Key for Main Page
+
+        window.addEventListener('keydown', function(e) {
+
+            if (e.key.toLowerCase() === 'q') window.location.href = 'https://classroom.google.com';
+
+        });
+
+    </script>
+
+</body>
+
+</html> 
